@@ -1,36 +1,36 @@
 import React from 'react'
 
-class Search extends React.Component {
-    state = {
-        search: '',
-        type: ''
-    }
+function Search (props) {
+    const {newSearch} = props
+    const [search, setSearch] = React.useState('')
+    const [type, setType] = React.useState('')
     
 
-    handleKey = (event)=>{
+    const handleKey = (event)=>{
         if(event.key === 'Enter') {
-            this.props.newSearch(this.state.search, this.state.type);
+            newSearch(search, type);
         }
     }
 
-    onValueChange = (event) => {
-        this.setState(() => ({type: event.target.value}), () => (this.props.newSearch(this.state.search, this.state.type)))
+    const onValueChange = (event) => {
+        setType(event.target.value)
+        newSearch(search, type)
     }
 
-    render(){
-        return <div className="row">
+
+        return   <div className="row">
                     <div className="col s12">
                         <div className="input-field">
                             <input
                                 placeholder="search"
                                 type="search"
                                 className="validate"
-                                value={this.state.search}
-                                onChange={(e) => this.setState({search: e.target.value})}
-                                onKeyDown={this.handleKey}
+                                value={search}
+                                onChange={e => setSearch(e.target.value)}
+                                onKeyDown={handleKey}
                             />
                             <button className="btn search-btn" onClick={() => {
-                                this.props.newSearch(this.state.search, this.state.type);
+                                newSearch(search, type)
                                 }}>Search</button>
 
                             <div className="rad">
@@ -38,10 +38,10 @@ class Search extends React.Component {
                                     <input 
                                         className="with-gap"
                                         type="radio"
-                                        checked={this.state.type === ""}
+                                        checked={type === ""}
                                         name="group3"
                                         value=""
-                                        onChange={this.onValueChange}
+                                        onChange={onValueChange}
                                     /> <span>All</span>
                                 </label>
 
@@ -49,10 +49,10 @@ class Search extends React.Component {
                                     <input 
                                         className="with-gap"
                                         type="radio"
-                                        checked={this.state.type === "movie"}
+                                        checked={type === "movie"}
                                         name="group3"
                                         value="movie"
-                                        onChange={this.onValueChange}
+                                        onChange={onValueChange}
                                     /> <span>Movie</span>
                                 </label>
 
@@ -60,10 +60,10 @@ class Search extends React.Component {
                                     <input 
                                         className="with-gap"
                                         type="radio"
-                                        checked={this.state.type === "series"}
+                                        checked={type === "series"}
                                         name="group3"
                                         value="series"
-                                        onChange={this.onValueChange}
+                                        onChange={onValueChange}
                                     /> <span>Series</span>
                                 </label>
                                 
@@ -72,7 +72,9 @@ class Search extends React.Component {
                         </div>
                     </div>
                 </div>
-    }
+
+     
+    
 }
 
 export {Search}
